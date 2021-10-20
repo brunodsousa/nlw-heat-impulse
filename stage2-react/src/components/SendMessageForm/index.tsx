@@ -1,12 +1,15 @@
-import { useContext, useState, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { VscGithubInverted, VscSignOut } from 'react-icons/vsc';
-import { AuthContext } from '../../contexts/auth';
+import { useAuth } from '../../hooks/useAuth';
 import { api } from '../../services/api';
+
 import styles from './styles.module.scss';
 
 export function SendMessageForm() {
-    const { user, signOut } = useContext(AuthContext);
     const [message, setMessage] = useState('');
+    const [isSendingMessage, setIsSendingMessage] = useState(false);
+
+    const { user, signOut } = useAuth();
 
     async function handleSendMessage(event: FormEvent) {
         event.preventDefault();
@@ -15,9 +18,15 @@ export function SendMessageForm() {
             return;
         }
 
-        await api.post('messages', { message });
+        setIsSendingMessage(true);
 
-        setMessage("");
+        try {
+            await api.post('messages', { message });
+
+            setMessage("");
+        } finally {
+            setIsSendingMessage(false);
+        }
     }
 
     return (
@@ -47,7 +56,12 @@ export function SendMessageForm() {
                     value={message}
                 />
 
-                <button type="submit">Enviar mensagem</button>
+                <button
+                    disabled={isSendingMessage}
+                    type="submit"
+                >
+                    Enviar mensagem
+                </button>
             </form>
         </div>
     )
