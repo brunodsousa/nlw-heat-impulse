@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { VscGithubInverted, VscSignOut } from 'react-icons/vsc';
+import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { api } from '../../services/api';
 
@@ -25,6 +26,22 @@ export function SendMessageForm() {
 
             setMessage("");
         } finally {
+            toast.success('Mensagem enviada com sucesso!', {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                icon: false,
+                style: {
+                    backgroundColor: 'green',
+                    color: 'white',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                }
+            });
             setIsSendingMessage(false);
         }
     }
