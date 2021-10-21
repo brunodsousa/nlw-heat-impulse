@@ -9,6 +9,12 @@
     text-align: center;
 
     position: relative;
+
+    > img {
+        position: absolute;
+        top: -45px;
+        right: 40px;
+    }
 }
 
 .signOutButton {

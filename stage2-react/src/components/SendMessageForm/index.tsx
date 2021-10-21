@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { api } from '../../services/api';
 
 import styles from './styles.module.scss';
+import seal from '../../assets/seal.svg';
 
 export function SendMessageForm() {
     const [message, setMessage] = useState('');
@@ -48,6 +49,7 @@ export function SendMessageForm() {
 
     return (
         <div className={styles.sendMessageFormWrapper}>
+            <img src={seal} alt="Build The Future - Rocketseat" />
             <button onClick={signOut} className={styles.signOutButton}>
                 <VscSignOut size="32" />
             </button>
